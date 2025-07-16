@@ -1,0 +1,22 @@
+services:
+  webrtc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: webrtc
+    container_name: webrtc
+    env_file:
+      - .env.production.local
+    healthcheck:
+      test: ["CMD-SHELL", "bun run health-check.ts || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - makuro-network
+networks:
+  makuro-network:
+    external: true
+  
+      
